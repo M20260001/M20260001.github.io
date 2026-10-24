@@ -1,0 +1,20 @@
+# ============================================================
+# Project / unit data for index.html
+# Edit the values after "=" only. Do not change the keys.
+# Lines starting with # are comments and are ignored.
+# Each unit1..unit12 line is the description shown on the
+# project card for that unit number (1-12).
+# ============================================================
+
+unit1=Course introduction, setting up github.io
+unit2=Claude AI, Claude Cowork, Claude Code
+unit3=Creating & configuring Skills, Claude Skills applications
+unit4=OpenAI Codex
+unit5=OpenAI memory, skills, and plugins
+unit6=Google Gemini Skills
+unit7=GoogleFlow
+unit8=N8N workflow automation
+unit9=N8N workflow automation (advanced)
+unit10=Local Ollama, Cloudflare, Docker
+unit11=Full local integration (LINE, Facebook, WhatsApp)
+unit12=Final project

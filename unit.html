@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Details | 2026 AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        /* Clean, professional gradient background */
+        body {
+            background: linear-gradient(135deg, #3d2f52 0%, #574571 50%, #9a89b3 100%);
+            background-attachment: fixed;
+            color: #2d3748;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Soft background highlights */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(201, 162, 39, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 80%, rgba(189, 195, 199, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 35%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background: rgba(61, 47, 82, 0.9) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(202, 164, 164, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            color: #caa4a4 !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #caa4a4 !important;
+        }
+
+        /* Unit Navigation Styles */
+        .unit-nav-container {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .unit-nav-left {
+            left: 20px;
+        }
+
+        .unit-nav-right {
+            right: 20px;
+        }
+
+        .unit-nav-btn {
+            background: rgba(87, 69, 113, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .unit-nav-btn:hover {
+            background: #caa4a4;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(201, 162, 39, 0.5);
+        }
+
+        .unit-nav-btn:disabled {
+            background: rgba(91, 101, 115, 0.5);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .unit-nav-btn:disabled:hover {
+            transform: none;
+            background: rgba(91, 101, 115, 0.5);
+        }
+
+        /* Unit Info Tooltip */
+        .unit-nav-tooltip {
+            position: absolute;
+            background: rgba(61, 47, 82, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1001;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+        }
+
+        .unit-nav-left .unit-nav-tooltip {
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .unit-nav-right .unit-nav-tooltip {
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .unit-nav-btn:hover .unit-nav-tooltip {
+            opacity: 1;
+        }
+
+        /* Unit Counter */
+        .unit-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(87, 69, 113, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        /* Keyboard Navigation Hint */
+        .keyboard-hint {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: #3d2f52;
+            z-index: 999;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            opacity: 0;
+            animation: fadeInHint 0.5s ease 2s forwards;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        .keyboard-hint .hint-close {
+            position: absolute;
+            top: -5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: #5b6573;
+            cursor: pointer;
+        }
+
+        /* Project Header */
+        .project-header {
+            background: transparent;
+            padding: 120px 0 40px;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 1rem 0;
+        }
+
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb-item a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            color: #caa4a4;
+        }
+
+        .breadcrumb-item.active {
+            color: #caa4a4;
+        }
+
+        .project-title {
+            color: white !important;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-top: 1rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-subtitle {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: #caa4a4 !important;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(201, 162, 39, 0.4);
+        }
+
+        /* Image Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(201, 162, 39, 0.3);
+            border-color: #caa4a4;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            padding: 1.5rem;
+        }
+
+        .gallery-overlay h5 {
+            color: #3d2f52;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-overlay p {
+            color: #574571;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #caa4a4;
+            font-weight: 600;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .demo-link:hover {
+            color: #3d2f52;
+            text-decoration: underline;
+        }
+
+        /* Badge styles */
+        .badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .bg-primary {
+            background: linear-gradient(135deg, #574571 0%, #3d2f52 100%) !important;
+            color: white !important;
+        }
+
+        .bg-success {
+            background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%) !important;
+            color: white !important;
+        }
+
+        .bg-warning {
+            background: linear-gradient(135deg, #e3c9c9 0%, #caa4a4 100%) !important;
+            color: white !important;
+        }
+
+        .bg-secondary {
+            background: linear-gradient(135deg, #bdc3c7 0%, #5b6573 100%) !important;
+            color: white !important;
+        }
+
+        /* Modal */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .modal-title {
+            color: #3d2f52;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .unit-nav-container {
+                position: fixed;
+                top: auto;
+                bottom: 100px;
+                transform: none;
+            }
+
+            .unit-nav-left {
+                left: 20px;
+            }
+
+            .unit-nav-right {
+                right: 20px;
+            }
+
+            .unit-nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .unit-nav-tooltip {
+                display: none;
+            }
+
+            .unit-counter {
+                bottom: 20px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .keyboard-hint {
+                display: none;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">2026 AI</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Unit Navigation - Left -->
+    <div class="unit-nav-container unit-nav-left">
+        <button class="unit-nav-btn" id="prevUnitBtn" onclick="navigateToUnit(currentUnit - 1)">
+            <i class="fas fa-chevron-left"></i>
+            <div class="unit-nav-tooltip" id="prevUnitTooltip">Unit 1</div>
+        </button>
+    </div>
+
+    <!-- Unit Navigation - Right -->
+    <div class="unit-nav-container unit-nav-right">
+        <button class="unit-nav-btn" id="nextUnitBtn" onclick="navigateToUnit(currentUnit + 1)">
+            <i class="fas fa-chevron-right"></i>
+            <div class="unit-nav-tooltip" id="nextUnitTooltip">Unit 3</div>
+        </button>
+    </div>
+
+    <!-- Unit Counter -->
+    <div class="unit-counter" id="unitCounter">
+        Unit 1 / 12
+    </div>
+
+    <!-- Keyboard Navigation Hint -->
+    <div class="keyboard-hint" id="keyboardHint">
+        <button class="hint-close" onclick="closeHint()">&times;</button>
+        💡 Use ← → keys to switch units
+    </div>
+
+    <!-- Project Header -->
+    <section class="project-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+                <div>
+                    <nav aria-label="breadcrumb" class="mt-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="index.html#projects">Projects</a>
+                            </li>
+                            <li class="breadcrumb-item active" id="breadcrumb-unit">Unit</li>
+                        </ol>
+                    </nav>
+
+                    <h1 class="project-title" id="project-title">Unit</h1>
+                    <p class="project-subtitle" id="project-subtitle">
+                        Unit Assignment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Image Gallery -->
+        <section class="content-section fade-in">
+            <h2 class="section-title">Assignment Gallery</h2>
+            <div class="image-gallery">
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Images will be dynamically generated -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalTitle">Project Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Project image" class="img-fluid rounded mb-3">
+                    <p id="imageDescription" class="mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentUnit = 1;
+        let images = [];
+        const totalUnits = 12;
+
+        // Always read projects.txt from the instructor's own site so every student
+        // fork (even hosted on a different github.io domain) shows the same, current
+        // unit list rather than whatever projects.txt happens to ship in their repo.
+        const PROJECTS_TXT_URL = 'https://drluarn.github.io/projects.txt';
+
+        // Fallback unit names (used if projects.txt cannot be fetched, e.g. opened via file://)
+        const defaultUnitInfo = {
+            1: { name: "Course introduction, setting up github.io", attributes: [] },
+            2: { name: "Claude AI, Claude Cowork, Claude Code", attributes: [] },
+            3: { name: "Creating & configuring Skills, Claude Skills applications", attributes: [] },
+            4: { name: "OpenAI Codex", attributes: [] },
+            5: { name: "OpenAI memory, skills, and plugins", attributes: [] },
+            6: { name: "Google Gemini Skills", attributes: [] },
+            7: { name: "GoogleFlow", attributes: [] },
+            8: { name: "N8N workflow automation", attributes: [] },
+            9: { name: "N8N workflow automation (advanced)", attributes: [] },
+            10: { name: "Local Ollama, Cloudflare, Docker", attributes: [] },
+            11: { name: "Full local integration (LINE, Facebook, WhatsApp)", attributes: [] },
+            12: { name: "Final project", attributes: [] }
+        };
+
+        let unitInfo = defaultUnitInfo;
+
+        // Parse a simple "key=value" text file, ignoring blank lines and comments
+        function parseKeyValueTxt(text) {
+            const data = {};
+            text.split(/\r?\n/).forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith('#')) return;
+                const idx = trimmed.indexOf('=');
+                if (idx === -1) return;
+                const key = trimmed.slice(0, idx).trim();
+                const value = trimmed.slice(idx + 1).trim();
+                data[key] = value;
+            });
+            return data;
+        }
+
+        async function loadUnitInfo() {
+            try {
+                const res = await fetch(PROJECTS_TXT_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('projects.txt not found');
+                const text = await res.text();
+                const parsed = parseKeyValueTxt(text);
+                const loaded = {};
+                for (let i = 1; i <= totalUnits; i++) {
+                    const name = parsed[`unit${i}`];
+                    if (name) loaded[i] = { name, attributes: [] };
+                }
+                // Only use the loaded list if every unit was found; otherwise keep defaults
+                unitInfo = (Object.keys(loaded).length === totalUnits) ? loaded : defaultUnitInfo;
+            } catch (err) {
+                console.warn('Could not load projects.txt, using built-in defaults.', err);
+                unitInfo = defaultUnitInfo;
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get unit number from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            currentUnit = parseInt(urlParams.get('unit')) || 1;
+
+            // Validate unit number (1-12)
+            if (currentUnit < 1 || currentUnit > totalUnits) {
+                currentUnit = 1;
+            }
+
+            // Render immediately with the built-in unit names so the page doesn't
+            // wait on the cross-origin projects.txt fetch; refresh in place once
+            // the instructor's latest names have loaded (see loadUnitInfo below).
+            updatePageContent();
+            updateNavigation();
+
+            // Show a temporary loading state while we probe for images
+            const galleryGrid = document.getElementById('gallery-grid');
+            if (galleryGrid) {
+                galleryGrid.innerHTML = '<div class="text-center text-white py-5"><i class="fas fa-spinner fa-spin me-2"></i>Detecting images...</div>';
+            }
+
+            // Generate images for this unit (dynamically detect how many exist), then render
+            generateImages().then(() => {
+                renderGallery();
+            });
+
+            // Fetch the live unit names in the background and re-render the title/
+            // breadcrumb/nav tooltips once available, without blocking initial paint
+            loadUnitInfo().then(() => {
+                updatePageContent();
+                updateNavigation();
+            });
+
+            initScrollAnimations();
+            initKeyboardNavigation();
+        });
+
+        // Navigate to specific unit
+        function navigateToUnit(unitNumber) {
+            if (unitNumber >= 1 && unitNumber <= totalUnits && unitNumber !== currentUnit) {
+                window.location.href = `unit.html?unit=${unitNumber}`;
+            }
+        }
+
+        // Update navigation buttons and tooltips
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevUnitBtn');
+            const nextBtn = document.getElementById('nextUnitBtn');
+            const prevTooltip = document.getElementById('prevUnitTooltip');
+            const nextTooltip = document.getElementById('nextUnitTooltip');
+            const unitCounter = document.getElementById('unitCounter');
+
+            // Update counter
+            unitCounter.textContent = `Unit ${currentUnit} / ${totalUnits}`;
+
+            // Update previous button
+            if (currentUnit > 1) {
+                prevBtn.disabled = false;
+                const prevUnit = unitInfo[currentUnit - 1];
+                prevTooltip.textContent = `Unit ${currentUnit - 1}: ${prevUnit.name}`;
+            } else {
+                prevBtn.disabled = true;
+                prevTooltip.textContent = 'This is already the first unit';
+            }
+
+            // Update next button
+            if (currentUnit < totalUnits) {
+                nextBtn.disabled = false;
+                const nextUnit = unitInfo[currentUnit + 1];
+                nextTooltip.textContent = `Unit ${currentUnit + 1}: ${nextUnit.name}`;
+            } else {
+                nextBtn.disabled = true;
+                nextTooltip.textContent = 'This is already the last unit';
+            }
+        }
+
+        // Initialize keyboard navigation
+        function initKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                // Ignore if user is typing in an input field
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        if (currentUnit > 1) {
+                            navigateToUnit(currentUnit - 1);
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        if (currentUnit < totalUnits) {
+                            navigateToUnit(currentUnit + 1);
+                        }
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        navigateToUnit(1);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        navigateToUnit(totalUnits);
+                        break;
+                }
+            });
+        }
+
+        // Close keyboard hint
+        function closeHint() {
+            document.getElementById('keyboardHint').style.display = 'none';
+        }
+
+        // Update page content based on unit number
+        function updatePageContent() {
+            const unit = unitInfo[currentUnit];
+            const unitText = `Unit #${currentUnit}`;
+            const unitFullTitle = `${unitText}: ${unit.name}`;
+            const subtitleText = `Unit ${currentUnit} Assignment`;
+            const titleText = `${unitFullTitle} - Project Details | 2026 AI`;
+
+            // Update page title
+            document.title = titleText;
+
+            // Update breadcrumb
+            document.getElementById('breadcrumb-unit').textContent = unitFullTitle;
+
+            // Update project title
+            document.getElementById('project-title').textContent = unitFullTitle;
+
+            // Update project subtitle
+            document.getElementById('project-subtitle').textContent = subtitleText;
+        }
+
+        // Generate images array for current unit
+        // Check whether an image exists via a lightweight HEAD request (no image
+        // body is downloaded, unlike probing with `new Image()`)
+        function checkImageExists(src) {
+            return fetch(src, { method: 'HEAD', cache: 'no-store' })
+                .then(res => res.ok)
+                .catch(() => false);
+        }
+
+        // Read URL{N}_{i}.txt (if present)
+        // Line 1: replaces the unit name normally shown under the image
+        // Line 2 (optional): a demo URL, shown on the next line as a clickable link
+        function loadImageNote(unitNum, index) {
+            return fetch(`URL/URL${unitNum}_${index}.txt`)
+                .then(response => {
+                    if (!response.ok) throw new Error("No note file.");
+                    return response.text();
+                })
+                .then(text => {
+                    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                    const note = {};
+                    if (lines[0]) note.caption = lines[0];
+                    if (lines[1]) note.demoUrl = lines[1];
+                    return note;
+                })
+                .catch(() => null);
+        }
+
+        // Accepted file extensions for assignment images, checked in this order
+        const IMAGE_EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG'];
+
+        // Find pic/unit{N}_{i}.<ext> for whichever extension the student used
+        async function findImageForIndex(unitNum, i) {
+            const results = await Promise.all(
+                IMAGE_EXTENSIONS.map(ext => {
+                    const src = `pic/unit${unitNum}_${i}.${ext}`;
+                    return checkImageExists(src).then(exists => exists ? src : null);
+                })
+            );
+            return results.find(src => src !== null) || null;
+        }
+
+        // Probe pic/unit{N}_1.*, _2.*... in parallel (HEAD requests are cheap),
+        // then keep the contiguous run starting at 1. This used to check images one
+        // at a time, awaiting a full image download for each probe before starting
+        // the next — slow, especially over a real network connection.
+        async function generateImages() {
+            const unit = unitInfo[currentUnit];
+            images = [];
+
+            const maxCheck = 12; // realistic upper bound on images per unit
+            const checks = await Promise.all(
+                Array.from({ length: maxCheck }, (_, k) => k + 1).map(i =>
+                    findImageForIndex(currentUnit, i).then(src => ({ i, src }))
+                )
+            );
+
+            for (const { i, src } of checks) {
+                if (!src) break; // stop at the first gap to preserve ordering
+                images.push({
+                    src: src,
+                    index: i,
+                    title: `${unit.name} - Image ${i}`,
+                    description: `Unit #${currentUnit}: ${unit.name} assignment image ${i}`,
+                    caption: unit.name,
+                    demoUrl: null
+                });
+            }
+
+            // Fall back to a placeholder image when no matching images are found
+            if (images.length === 0) {
+                images.push({
+                    src: 'pic/no.jpg',
+                    index: null,
+                    title: `${unit.name} - No Image Yet`,
+                    description: `Unit #${currentUnit}: ${unit.name} has no assignment image uploaded yet`,
+                    caption: unit.name,
+                    demoUrl: null
+                });
+            }
+
+            // For each existing image, check whether a matching URL{N}_{i}.txt note file exists
+            await Promise.all(images.map(async (image) => {
+                if (!image.index) return; // skip the no.jpg placeholder
+                const note = await loadImageNote(currentUnit, image.index);
+                if (note) {
+                    if (note.caption) image.caption = note.caption;
+                    if (note.demoUrl) image.demoUrl = note.demoUrl;
+                }
+            }));
+        }
+
+        // Render gallery based on current unit
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            const unit = unitInfo[currentUnit];
+
+            galleryGrid.innerHTML = images.map((image, index) => {
+                const fileName = image.src.split('/').pop().replace(/\.[^.]+$/, '');
+                const captionText = image.caption || unit.name;
+                const demoLinkHtml = image.demoUrl
+                    ? `<a href="${image.demoUrl}" target="_blank" rel="noopener" class="demo-link" onclick="event.stopPropagation()">
+                           <i class="fas fa-external-link-alt"></i> ${image.demoUrl}
+                       </a>`
+                    : '';
+
+                return `
+                    <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage(${index})">
+                        <img src="${image.src}" alt="Unit ${currentUnit} - Image ${index + 1}">
+                        <div class="gallery-overlay">
+                            <h5>${fileName}</h5>
+                            <p>${captionText}</p>
+                            ${demoLinkHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Show image in modal
+        function showImage(index) {
+            const image = images[index];
+            const modalImage = document.getElementById('modalImage');
+            const imageDescription = document.getElementById('imageDescription');
+
+            modalImage.src = image.src;
+            imageDescription.textContent = image.description;
+        }
+
+        // Scroll animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 70;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(61,47,82,0.98)';
+            } else {
+                navbar.style.background = 'rgba(61,47,82,0.9)';
+            }
+        });
+    </script>
+
+
+</body>
+</html>

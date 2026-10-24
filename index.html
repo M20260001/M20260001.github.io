@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Pin Luarn | 2026 AI Personal Site</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- chatbot temporarily disabled; uncomment to enable and confirm the filename is chatbot.js -->
+    <!-- <script src="chatbot.js"></script> -->
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">2026 AI</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://drluarn.github.io/student.html" target="_blank" rel="noopener">Student Portfolio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content fade-in">
+                    <h1 id="name"></h1>
+                    <div class="titles-container">
+                        <p class="subtitle title-line" id="title1"></p>
+                        <p class="subtitle title-line" id="title2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Expertise:</strong>
+                        <span id="expertise"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Education:</strong>
+                        <span id="education"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Email:</strong>
+                        <a href="" class="text-white" id="email"></a>
+                    </div>
+                    <div class="mb-3">
+                        <strong>LinkedIn:</strong>
+                        <a href="" target="_blank" class="text-white" id="linkedin">
+                            <i class="fab fa-linkedin me-1"></i>
+                            <span id="linkedin-text"></span>
+                            <i class="fas fa-external-link-alt ms-1"></i>
+                        </a>
+                    </div>
+                    <div class="mb-4 student-links">
+                        <strong>2026 Pforzheim Student Project Links:</strong>
+                        <div class="student-link-item">
+                            <a href="https://drluarn.github.io/student.html" target="_blank" rel="noopener">
+                                <span>• Student Personal Website Portfolio</span>
+                                <i class="fas fa-external-link-alt ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center fade-in">
+                    <img src="mypic.jpg" alt="profile photo" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card fade-in">
+                        <div class="card-body p-4">
+                            <p class="lead text-center" id="about-text">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+
+            <!-- Projects are rendered dynamically by JS -->
+            <div class="project-grid fade-in" id="projects-grid"></div>
+        </div>
+    </section>
+
+    <!-- Student Portfolio Section -->
+    <section id="portfolio" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Student Portfolio</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="portfolio-cta fade-in">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4 style="color: var(--navy-deep); font-weight: 700;">2026 Pforzheim Student Personal Website Portfolio</h4>
+                        <p class="text-muted mt-2">Click the button below to browse this semester's student project websites</p>
+                        <a href="https://drluarn.github.io/student.html" class="btn-elegant" target="_blank" rel="noopener">
+                            <i class="fas fa-arrow-right"></i> <span>View Student Portfolio</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-info fade-in">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h5>Email</h5>
+                                <a id="contact-email1" href=""></a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h5>Phone</h5>
+                                <p id="contact-phone"></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h5>Location</h5>
+                                <p id="contact-location"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Dr. Pin Luarn. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const totalUnits = 12;
+
+        // Fallback project descriptions (used if projects.txt cannot be fetched, e.g. opened via file://)
+        const defaultProjects = [
+            {id: 1, description: 'Course introduction, setting up github.io'},
+            {id: 2, description: 'Claude AI, Claude Cowork, Claude Code'},
+            {id: 3, description: 'Creating & configuring Skills, Claude Skills applications'},
+            {id: 4, description: 'OpenAI Codex'},
+            {id: 5, description: 'OpenAI memory, skills, and plugins'},
+            {id: 6, description: 'Google Gemini Skills'},
+            {id: 7, description: 'GoogleFlow'},
+            {id: 8, description: 'N8N workflow automation'},
+            {id: 9, description: 'N8N workflow automation (advanced)'},
+            {id: 10, description: 'Local Ollama, Cloudflare, Docker'},
+            {id: 11, description: 'Full local integration (LINE, Facebook, WhatsApp)'},
+            {id: 12, description: 'Final project'}
+        ];
+
+        let projects = defaultProjects;
+
+        // Always read projects.txt from the instructor's own site so every student
+        // fork (even hosted on a different github.io domain) shows the same, current
+        // unit list rather than whatever projects.txt happens to ship in their repo.
+        const PROJECTS_TXT_URL = 'https://drluarn.github.io/projects.txt';
+
+        async function loadProjectsTxt() {
+            try {
+                const res = await fetch(PROJECTS_TXT_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('projects.txt not found');
+                const text = await res.text();
+                const parsed = parseProfileTxt(text);
+                const loaded = [];
+                for (let i = 1; i <= totalUnits; i++) {
+                    const description = parsed[`unit${i}`];
+                    if (description) loaded.push({id: i, description});
+                }
+                // Only use the loaded list if every unit was found; otherwise keep defaults
+                projects = (loaded.length === totalUnits) ? loaded : defaultProjects;
+            } catch (err) {
+                console.warn('Could not load projects.txt, using built-in defaults.', err);
+                projects = defaultProjects;
+            }
+        }
+
+        // Fallback profile (used if profile.txt cannot be fetched, e.g. opened via file://)
+        const defaultProfile = {
+            name: 'Prof. Pin Luarn',
+            title1: 'Top 2% Scientist Worldwide (2020-2026)',
+            title2: '2024 National Teaching Award Laureate',
+            expertise: 'Internet Marketing, AI Applications, Agentic AI',
+            education: 'Ph.D. in Industrial Engineering, University of Wisconsin-Madison, USA',
+            email: 'luarn@mail.ntust.edu.tw',
+            linkedin: 'https://pse.is/8nn88y',
+            about1: 'Prof. Luarn earned his B.S. in Industrial Engineering from Tunghai University,',
+            about2: 'and his M.S. and Ph.D. in Industrial Engineering from the University of Wisconsin-Madison.',
+            about3: "Named among the world's top 2% scientists by Stanford University & Elsevier for seven consecutive years (2020-2026).",
+            about4: 'Recipient of the 2024 Presidential National Teaching Award, Taiwan',
+            phone: '+886-2-2737-6754',
+            location: 'T2-409, National Taiwan University of Science and Technology, No. 43, Sec. 4, Keelung Rd., Taipei, Taiwan'
+        };
+
+        let profileData = defaultProfile;
+
+        // Parse a simple "key=value" text file, ignoring blank lines and comments
+        function parseProfileTxt(text) {
+            const data = {};
+            text.split(/\r?\n/).forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith('#')) return;
+                const idx = trimmed.indexOf('=');
+                if (idx === -1) return;
+                const key = trimmed.slice(0, idx).trim();
+                const value = trimmed.slice(idx + 1).trim();
+                data[key] = value;
+            });
+            return data;
+        }
+
+        async function loadProfileTxt() {
+            try {
+                const res = await fetch('profile.txt', { cache: 'no-store' });
+                if (!res.ok) throw new Error('profile.txt not found');
+                const text = await res.text();
+                const parsed = parseProfileTxt(text);
+                // Merge over defaults so missing keys still fall back gracefully
+                profileData = Object.assign({}, defaultProfile, parsed);
+            } catch (err) {
+                console.warn('Could not load profile.txt, using built-in defaults.', err);
+                profileData = defaultProfile;
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            await Promise.all([loadProfileTxt(), loadProjectsTxt()]);
+            applyProfileData();
+            renderProjects();
+            initScrollAnimations();
+            initSmoothScrolling();
+        });
+
+        // Fill in profile fields (name, titles, about text, contact info)
+        function applyProfileData() {
+            const p = profileData;
+            document.getElementById('name').textContent = p.name;
+            document.getElementById('title1').textContent = p.title1;
+            document.getElementById('title2').textContent = p.title2;
+            document.getElementById('expertise').textContent = p.expertise;
+            document.getElementById('education').textContent = p.education;
+
+            document.getElementById('email').textContent = p.email;
+            document.getElementById('email').href = `mailto:${p.email}`;
+            document.getElementById('linkedin').href = p.linkedin;
+            document.getElementById('linkedin-text').textContent = p.linkedin;
+
+            const aboutParts = [p.about1, p.about2, p.about3, p.about4]
+                .filter(text => text && text.trim());
+            document.getElementById('about-text').innerHTML = aboutParts.join(' ');
+
+            document.getElementById('contact-email1').textContent = p.email;
+            document.getElementById('contact-email1').href = `mailto:${p.email}`;
+            document.getElementById('contact-phone').textContent = p.phone;
+            document.getElementById('contact-location').textContent = p.location;
+        }
+
+        // Render the project grid
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+
+            grid.innerHTML = projects.map(project => {
+                return `
+                    <div class="project-card" onclick="openProject(${project.id})">
+                        <div class="project-number">${project.id}</div>
+                        <h5>Unit #${project.id}</h5>
+                        <p class="text-muted">${project.description}</p>
+                        <small class="text-primary">Click for details</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Open project details
+        function openProject(id) {
+            window.open(`unit.html?unit=${id}`, '_blank');
+        }
+
+        // Scroll-triggered fade-in animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for in-page navigation links
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 70;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255,255,255,0.98)';
+            } else {
+                navbar.style.background = 'rgba(255,255,255,0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
